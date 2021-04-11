@@ -1,0 +1,17 @@
+As a user I want to be able to
+  - Switch chat rooms
+  - See messages from other users in a given chat room
+  - Send messages to a chat room
+  - React to messages
+    - See other users' reactions to my messages
+  - See users in a chat room
+  - Add a chat room?
+    - Invite users to a chat room?
+  - Private message? (breakout room)
+  - Message types?
+    - links
+    - pics
+    - vidz
+    - memes (all the memes)
+    - emojis
+  - Change font style/color?
