@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
+import { LogInScreen } from './LoginScreen';
 
 export class App extends Component {
-  state ={
-    data: [],
-    currentUser: sessionStorage.getItem('currentUser'),
-    logInField: '',
+  state = {
+    currentUser: localStorage.getItem('currentUser'),
   }
 
-  handleLogIn = () => {
-    sessionStorage.setItem('currentUser', this.state.logInField);
+  handleLogIn = (userName) => {
+    localStorage.setItem('currentUser', userName);
     this.forceUpdate();
-  }
-
-  handleUserEntry = (event) => {
-    const value = event.target.value;
-    this.setState({ logInField: value });
-  }
-
-  renderLogin = () => {
-    return (
-      <form>
-        <input onChange={this.handleUserEntry}/>
-        <button onClick={this.handleLogIn}>Log in</button>
-      </form>
-    )
   }
 
   render() {
     return (
-      <div>
-        {this.state.currentUser ? <div>Welcome {this.state.currentUser}</div> : this.renderLogin()}
+      <div className='app'>
+        {this.state.currentUser
+          ? <div>Welcome {this.state.currentUser}</div>
+          : <LogInScreen handleLogIn={this.handleLogIn}/>
+        }
       </div>
     )
   }
