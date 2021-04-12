@@ -1,4 +1,6 @@
 As a user I want to be able to
+  - Log in
+  - See 'online' time
   - Switch chat rooms
   - See messages from other users in a given chat room
   - Send messages to a chat room
