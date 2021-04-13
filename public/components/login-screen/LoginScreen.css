@@ -1,20 +1,20 @@
 .formContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
+
   height: 100%;
 }
 
 .formContainer * {
-  width: 250px;
-  height: 30px;
-
   font-family: sans-serif;
   font-weight: lighter;
 }
 
 .userField {
+  height: 30px;
+  width: 250px;
   text-indent: 15px;
 }
 
@@ -22,9 +22,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: white;
   background-color: red;
-  margin-top: 20px;
   font-size: 14px;
+  margin-top: 20px;
 
+  height: 30px;
+  width: 250px;
 }
