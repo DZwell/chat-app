@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { LogInScreen } from '../login-screen';
+import constants from './constants';
 import { ChatRoomsList } from '../chat-rooms-list';
 
-
-const CURRENT_USER = 'currentUser';
-const chatRoomsUrl = 'http://localhost:8080/api/rooms';
+const { chatRoomsUrl, currentUser } = constants;
 
 export class App extends Component {
   state = {
-    currentUser: localStorage.getItem(CURRENT_USER),
+    currentUser: localStorage.getItem(currentUser),
     chatRooms: [],
   }
 
@@ -23,7 +22,7 @@ export class App extends Component {
   }
 
   handleLogIn = (userName) => {
-    localStorage.setItem(CURRENT_USER, userName);
+    localStorage.setItem(currentUser, userName);
     this.forceUpdate();
   }
 
