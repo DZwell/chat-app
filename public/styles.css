@@ -6,6 +6,10 @@ body {
   height: 100%;
 }
 
-html div:nth-child(-n+1) {
+#root {
+  height: 100%;
+}
+
+.app {
   height: 100%;
 }

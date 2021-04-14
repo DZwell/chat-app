@@ -9,16 +9,21 @@ export class App extends Component {
   state = {
     currentUser: localStorage.getItem(currentUser),
     chatRooms: [],
+    selectedChatRoom: '',
   }
 
   componentDidMount() {
     fetch(chatRoomsUrl)
     .then(response => response.json())
-    .then(this.handleFetchRoomsSuccess);
+    .then(this.handleFetchRoomsSuccess, this.handleFetchRoomsFailure);
   }
 
   handleFetchRoomsSuccess = (data) => {
-    this.setState({ chatRooms: data });
+    this.setState({ chatRooms: data, selectedChatRoom: data[0].name });
+  }
+
+  handleFetchRoomsFailure = (error) => {
+    console.error(error, 'Something went wrong');
   }
 
   handleLogIn = (userName) => {
@@ -30,7 +35,7 @@ export class App extends Component {
     return (
       <div className='app'>
         {this.state.currentUser
-          ? <ChatRoomsList chatRooms={this.state.chatRooms}/>
+          ? <ChatRoomsList user={this.state.currentUser} chatRooms={this.state.chatRooms}/>
           : <LogInScreen handleLogIn={this.handleLogIn}/>
         }
       </div>
