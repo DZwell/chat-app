@@ -1,15 +1,30 @@
 import React from 'react';
-import './styles.css'
+import './ChatRoomsList.css';
+import classNames from 'classnames';
 
 export const ChatRoomsList = (props) => {
-  const roomNameClasses = classNames('roomName',{aelec} )
+  const handleSelectedRoomChange = (roomName) => {
+    props.handleSelectedRoomChange(roomName);
+  }
+
   return (
-    <div className='chatRoomsContainer'>
-      <section className='userSection'>
-        <p className='userName'>{props.user}</p>
-        <p className='onlineTime'>Online for 12 minutes</p>
-      </section>
-      {props.chatRooms.map(room => <nav className='roomName'>{room.name}</nav>)}
-    </div>
+    <section className='chatRoomListContainer'>
+      <header>
+        <h1>{props.user}</h1>
+        <span>Online for 12 minutes</span>
+      </header>
+      <nav>
+        <ul className='roomNameContainer'>
+          {props.chatRooms.map(room => {
+            const roomNameClasses = classNames('roomName', { 'selectedRoom': props.selectedChatRoom === room.name } );
+            return (
+              <li onClick={() => handleSelectedRoomChange(room.name)} className={roomNameClasses} key={room.name}>
+                <a className='roomName'>{room.name}</a>
+              </li>
+              )
+          })}
+        </ul>
+      </nav>
+    </section>
   )
 }

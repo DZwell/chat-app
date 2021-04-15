@@ -3,13 +3,13 @@ import { LogInScreen } from '../login-screen';
 import constants from './constants';
 import { ChatRoomsList } from '../chat-rooms-list';
 
-const { chatRoomsUrl, currentUser } = constants;
+const { chatRoomsUrl, currentUser, selectedChatRoom } = constants;
 
 export class App extends Component {
   state = {
     currentUser: localStorage.getItem(currentUser),
     chatRooms: [],
-    selectedChatRoom: '',
+    selectedChatRoom: localStorage.getItem(selectedChatRoom), // After page refresh, we'll still know what room you were in last
   }
 
   componentDidMount() {
@@ -19,7 +19,7 @@ export class App extends Component {
   }
 
   handleFetchRoomsSuccess = (data) => {
-    this.setState({ chatRooms: data, selectedChatRoom: data[0].name });
+    this.setState({ chatRooms: data });
   }
 
   handleFetchRoomsFailure = (error) => {
@@ -31,11 +31,16 @@ export class App extends Component {
     this.forceUpdate();
   }
 
+  handleSelectedRoomChange = (roomName) => {
+    localStorage.setItem(selectedChatRoom, roomName);
+    this.setState({ selectedChatRoom: roomName });
+  }
+
   render() {
     return (
       <div className='app'>
         {this.state.currentUser
-          ? <ChatRoomsList user={this.state.currentUser} chatRooms={this.state.chatRooms}/>
+          ? <ChatRoomsList handleSelectedRoomChange={this.handleSelectedRoomChange} selectedChatRoom={this.state.selectedChatRoom} user={this.state.currentUser} chatRooms={this.state.chatRooms}/>
           : <LogInScreen handleLogIn={this.handleLogIn}/>
         }
       </div>
