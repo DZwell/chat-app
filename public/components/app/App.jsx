@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { LogInScreen } from '../login-screen';
 import constants from './constants';
 import { ChatRoomsList } from '../chat-rooms-list';
+import { ChatDetails } from '../chat-details';
 
 const { chatRoomsUrl, currentUser, selectedChatRoom } = constants;
+const storedUser = JSON.parse(localStorage.getItem(currentUser));
 
 export class App extends Component {
   state = {
-    currentUser: localStorage.getItem(currentUser),
+    currentUser: storedUser,
     chatRooms: [],
     selectedChatRoom: localStorage.getItem(selectedChatRoom), // After page refresh, we'll still know what room you were in last
   }
@@ -27,8 +29,9 @@ export class App extends Component {
   }
 
   handleLogIn = (userName) => {
-    localStorage.setItem(currentUser, userName);
-    this.forceUpdate();
+    const userObject = { userName: userName, timeStamp: new Date().getTime()}
+    localStorage.setItem(currentUser, JSON.stringify(userObject));
+    this.setState({ currentUser: userName });
   }
 
   handleSelectedRoomChange = (roomName) => {
@@ -37,12 +40,13 @@ export class App extends Component {
   }
 
   render() {
+    if (!this.state.currentUser) {
+      return <LogInScreen handleLogIn={this.handleLogIn}/>
+    }
     return (
       <div className='app'>
-        {this.state.currentUser
-          ? <ChatRoomsList handleSelectedRoomChange={this.handleSelectedRoomChange} selectedChatRoom={this.state.selectedChatRoom} user={this.state.currentUser} chatRooms={this.state.chatRooms}/>
-          : <LogInScreen handleLogIn={this.handleLogIn}/>
-        }
+        <ChatDetails />
+        <ChatRoomsList handleSelectedRoomChange={this.handleSelectedRoomChange} selectedChatRoom={this.state.selectedChatRoom} user={this.state.currentUser} chatRooms={this.state.chatRooms}/>
       </div>
     )
   }

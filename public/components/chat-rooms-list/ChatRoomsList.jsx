@@ -7,11 +7,16 @@ export const ChatRoomsList = (props) => {
     props.handleSelectedRoomChange(roomName);
   }
 
+  const getOnlineTime = (timeLoggedIn) => {
+    const diff = new Date().getTime() - timeLoggedIn;
+    return Math.round(diff/60000);
+  }
+
   return (
     <section className='chatRoomListContainer'>
       <header>
-        <h1>{props.user}</h1>
-        <span>Online for 12 minutes</span>
+        <h1>{props.user.userName}</h1>
+        <span>Online for {getOnlineTime(props.user.timeStamp)} minutes</span>
       </header>
       <nav>
         <ul className='roomNameContainer'>
