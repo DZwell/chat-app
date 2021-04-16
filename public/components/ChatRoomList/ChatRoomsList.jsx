@@ -4,10 +4,6 @@ import "./ChatRoomsList.css";
 import classNames from "classnames";
 
 export const ChatRoomsList = (props) => {
-  const handleSelectedRoomChange = (room) => {
-    props.handleSelectedRoomChange(room);
-  };
-
   const timeOnline = moment(props.user.timeStamp).fromNow(true);
 
   return (
@@ -24,7 +20,7 @@ export const ChatRoomsList = (props) => {
             });
             return (
               <li
-                onClick={() => handleSelectedRoomChange(room)}
+                onClick={() => props.handleSelectedRoomChange(room.id)}
                 className={roomNameClasses}
                 key={room.name}
               >

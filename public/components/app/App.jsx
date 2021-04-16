@@ -1,50 +1,52 @@
 import React, { Component } from "react";
-import { LogInScreen } from "../login-screen";
+import 'regenerator-runtime/runtime'
+import { LogInScreen } from "../LoginScreen";
 import urls from "./urls";
-import { ChatRoomsList } from "../chat-rooms-list";
-import { ChatDetails } from "../chat-details";
+import { ChatRoomsList } from "../ChatRoomList";
+import { ChatDetails } from "../ChatDetails";
 
 const { chatDetailsUrl, chatRoomsUrl, messagesUrl } = urls;
-const storedUser = JSON.parse(localStorage.getItem("currentUser"));
 
 export class App extends Component {
-  state = {
-    currentUser: storedUser,
-    chatRooms: [],
-    selectedChatRoom: localStorage.getItem("selectedChatRoom"), // After page refresh, we'll still know what room you were in last
-  };
-
-  componentDidMount() {
-    Promise.all([fetch(chatRoomsUrl), fetch(chatDetailsUrl)])
-
-      .then(([res1, res2]) => {
-        return Promise.all([res1.json(), res2.json()]);
-      })
-      .then(([res1, res2]) => {
-        // set state in here
-      });
-    fetch(chatRoomsUrl)
-      .then((response) => response.json())
-      .then(this.handleFetchRoomsSuccess, this.handleFetchRoomsFailure);
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: {},
+      chatRooms: [],
+      selectedChatRoom: {},
+    };
   }
 
-  handleFetchRoomsSuccess = (data) => {
-    this.setState({ chatRooms: data });
-  };
+  componentDidMount() {
+    const { storage } = this.props;
+    this.setState(state => ({
+      currentUser: JSON.parse(storage.getItem("currentUser")),
+    }));
 
-  handleFetchRoomsFailure = (error) => {
-    console.error(error, "Something went wrong");
-  };
+    this.fetchChatRooms();
+  }
+
+  fetchChatRooms = async () => {
+    try {
+      const roomList = await fetch(chatRoomsUrl).then(response => response.json());
+      const selectedChatRoom = JSON.parse(this.props.storage.getItem('selectedChatRoom')) || roomList[0];
+      const roomDetails = await fetch(chatDetailsUrl(selectedChatRoom.id)).then(response => response.json());
+      this.setState(state => ({ chatRooms: roomList, selectedChatRoom: roomDetails }));
+    } catch {
+      console.log('Something went wrong');
+    }
+  }
 
   handleLogIn = (userName) => {
     const userObject = { userName: userName, timeStamp: new Date().getTime() };
-    localStorage.setItem("currentUser", JSON.stringify(userObject));
-    this.setState({ currentUser: userName });
+    this.props.storage.setItem("currentUser", JSON.stringify(userObject));
+    this.setState(state => ({ currentUser: userObject }));
   };
 
-  handleSelectedRoomChange = (room) => {
-    localStorage.setItem("selectedChatRoom", room.name);
-    this.setState({ selectedChatRoom: room });
+  handleSelectedRoomChange = async (roomId) => {
+    const roomDetails = await fetch(chatDetailsUrl(roomId)).then(response => response.json());
+    this.props.storage.setItem("selectedChatRoom", JSON.stringify(roomDetails));
+    this.setState(state => ({ selectedChatRoom: roomDetails }));
   };
 
   render() {
