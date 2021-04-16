@@ -50,17 +50,19 @@ export class App extends Component {
   };
 
   render() {
-    if (!this.state.currentUser) {
+    const { chatRooms, currentUser, selectedChatRoom } = this.state;
+
+    if (!currentUser) {
       return <LogInScreen handleLogIn={this.handleLogIn} />;
     }
     return (
       <div className="app">
-        <ChatDetails chatRoom={this.state.selectedChatRoom} />
+        {Object.keys(selectedChatRoom).length && <ChatDetails chatRoom={selectedChatRoom} currentUser={currentUser} />}
         <ChatRoomsList
           handleSelectedRoomChange={this.handleSelectedRoomChange}
-          selectedChatRoom={this.state.selectedChatRoom}
-          user={this.state.currentUser}
-          chatRooms={this.state.chatRooms}
+          selectedChatRoom={selectedChatRoom}
+          user={currentUser}
+          chatRooms={chatRooms}
         />
       </div>
     );
