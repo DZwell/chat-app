@@ -23,7 +23,6 @@ export class ChatWindowContainer extends React.Component<ChatWindowContainerProp
     chatMessages: [],
   }
 
-
   componentDidMount() {
     this.pollForNewMessages();
   }

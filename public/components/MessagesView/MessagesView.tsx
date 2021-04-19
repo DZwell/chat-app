@@ -67,7 +67,7 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
         </ul>
         <footer>
           <form className="messageForm" onSubmit={this.sendMessageRequest}>
-            <input value={this.state.currentMessage} onChange={this.handleMessageChange} placeholder="Type your message" />
+            <input value={this.state.currentMessage} onChange={this.handleMessageChange} placeholder="Type a message...." />
             <div onClick={this.sendMessageRequest}>Send</div>
           </form>
         </footer>

@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 import 'regenerator-runtime/runtime'
-import { LogInScreen } from "../LoginScreen";
-import urls from "./urls";
+import { LogInScreen } from '../LoginScreen';
+import urls from './urls';
 import './App.css';
-import { ChatRoomsList } from "../ChatRoomList";
-import { ChatWindowContainer } from "../ChatWindowContainer/ChatWindowContainer";
+import { ChatRoomsList } from '../ChatRoomList/ChatRoomsList';
+import { ChatWindowContainer } from '../ChatWindowContainer/ChatWindowContainer';
 import { CurrentUser, ChatRoom } from './interfaces';
 
 const { chatDetailsUrl, chatRoomsUrl } = urls;
@@ -29,7 +29,7 @@ export class App extends React.Component<AppProps, AppState> {
   componentDidMount() {
     const { storage } = this.props;
     this.setState(() => ({
-      currentUser: JSON.parse(storage.getItem("currentUser")),
+      currentUser: JSON.parse(storage.getItem('currentUser')),
     }));
 
     this.fetchRoomsAndDetails();
@@ -48,13 +48,13 @@ export class App extends React.Component<AppProps, AppState> {
 
   handleLogIn = (userName: string) => {
     const userObject = { userName: userName, timeStamp: new Date().getTime() };
-    this.props.storage.setItem("currentUser", JSON.stringify(userObject));
+    this.props.storage.setItem('currentUser', JSON.stringify(userObject));
     this.setState(() => ({ currentUser: userObject }));
   };
 
   handleSelectedRoomChange = async (roomId) => {
     const roomDetails = await fetch(chatDetailsUrl(roomId)).then(response => response.json());
-    this.props.storage.setItem("selectedChatRoom", JSON.stringify(roomDetails));
+    this.props.storage.setItem('selectedChatRoom', JSON.stringify(roomDetails));
     this.setState(() => ({ selectedChatRoom: roomDetails }));
   };
 

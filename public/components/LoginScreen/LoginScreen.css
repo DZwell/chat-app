@@ -3,31 +3,27 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
   height: 100%;
 }
 
 .formContainer * {
-  font-family: sans-serif;
   font-weight: lighter;
 }
 
 .userField {
   height: 30px;
-  width: 250px;
   text-indent: 15px;
+  width: 250px;
 }
 
 .loginButton {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  color: white;
   background-color: red;
+  color: white;
   font-size: 14px;
-  margin-top: 20px;
-
+  justify-content: center;
   height: 30px;
+  margin-top: 20px;
   width: 250px;
 }

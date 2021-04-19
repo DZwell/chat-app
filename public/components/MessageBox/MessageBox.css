@@ -1,10 +1,10 @@
 .chatList{
+	background-color: #eff1f2;
+	border-bottom: 2px solid #fff;
+	border-top: 2px solid #fff;
+	height: 535px;
 	list-style-type: none;
 	overflow-y: scroll;
-	height: 535px;
-	border-top: 2px solid #fff;
-	border-bottom: 2px solid #fff;
-	background-color: #eff1f2;
 }
 .chatList li{
 	display: flex;
@@ -19,9 +19,9 @@
 	text-align: start;
 }
 .chatList .message{
+	border-radius: 25px;
 	padding:20px;
 	line-height:25px;
-	border-radius: 25px;
 	width: 40%;
 }
 .chatList .outgoing {

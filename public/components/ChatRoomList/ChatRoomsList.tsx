@@ -1,9 +1,17 @@
-import React from "react";
-import moment from "moment";
-import "./ChatRoomsList.css";
-import classNames from "classnames";
+const moment = require('moment'); // For some reason Typescript was having a hard time using an 'import' statement with this library.
+import * as React from 'react';
+import './ChatRoomsList.css';
+import classNames from 'classnames';
+import { ChatRoom, CurrentUser } from '../App/interfaces';
 
-export const ChatRoomsList = (props) => {
+interface ChatRoomsListProps {
+  chatRooms: ChatRoom[];
+  handleSelectedRoomChange: (roomId: number) => void;
+  selectedChatRoom: ChatRoom;
+  user: CurrentUser;
+}
+
+export const ChatRoomsList = (props: ChatRoomsListProps) => {
   const timeOnline = moment(props.user.timeStamp).fromNow(true);
 
   return (
@@ -15,9 +23,9 @@ export const ChatRoomsList = (props) => {
       <nav>
         <ul className="roomNameContainer">
           {props.chatRooms.map((room) => {
-            const roomNameClasses = classNames("roomName", {
+            const roomNameClasses = classNames('roomName', {
               selectedRoom: props.selectedChatRoom.name === room.name,
-            });
+            })
             return (
               <li
                 onClick={() => props.handleSelectedRoomChange(room.id)}
