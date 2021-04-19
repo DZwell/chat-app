@@ -4,7 +4,7 @@ import { LogInScreen } from "../LoginScreen";
 import urls from "./urls";
 import './App.css';
 import { ChatRoomsList } from "../ChatRoomList";
-import { ChatWindowContainer } from "../ChatWindowContainer";
+import { ChatWindowContainer } from "../ChatWindowContainer/ChatWindowContainer";
 import { CurrentUser, ChatRoom } from './interfaces';
 
 const { chatDetailsUrl, chatRoomsUrl } = urls;

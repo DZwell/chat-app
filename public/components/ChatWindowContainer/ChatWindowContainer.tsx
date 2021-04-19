@@ -23,23 +23,13 @@ export class ChatWindowContainer extends React.Component<ChatWindowContainerProp
     chatMessages: [],
   }
 
+
   componentDidMount() {
     this.pollForNewMessages();
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-  }
-
-  async sendMessageRequest(message: string) {
-    const { chatRoom, currentUser } = this.props;
-    return await fetch(messagesUrl(chatRoom.id), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: currentUser.userName, message })
-    }).then(res => res.json());
   }
 
   private pollForNewMessages() {
@@ -58,7 +48,6 @@ export class ChatWindowContainer extends React.Component<ChatWindowContainerProp
         <ChatDetails currentUser={currentUser} chatRoom={chatRoom} usersInRoom={this.usersInRoom}/>
         <MessagesView
           chatMessages={this.state.chatMessages}
-          sendMessageRequest={this.sendMessageRequest.bind(this)}
           selectedChatRoomId={this.props.chatRoom.id}
           currentUser={this.props.currentUser}
         />

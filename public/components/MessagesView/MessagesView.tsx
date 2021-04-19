@@ -8,7 +8,6 @@ interface MessagesViewProps {
   currentUser: CurrentUser;
   chatMessages: ChatMessage[];
   selectedChatRoomId: number;
-  sendMessageRequest: (currentMessage: string) => void;
 }
 
 interface MessagesViewState {
@@ -16,8 +15,22 @@ interface MessagesViewState {
 }
 
 export class MessagesView extends React.Component<MessagesViewProps, MessagesViewState> {
+  messagesEndRef = React.createRef<HTMLUListElement>();
   state: MessagesViewState = {
     currentMessage: '',
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    if (this.messagesEndRef) {
+      this.messagesEndRef.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event as any;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
   }
 
   sendMessageRequest = async (event) => {
@@ -44,7 +57,7 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
     const { chatMessages, currentUser } = this.props;
     return (
       <div>
-        <ul className='chatList'>
+        <ul ref={this.messagesEndRef} className='chatList'>
           {chatMessages.map((message, index) =>
             <MessageBox
               key={this.messageKey(message.name, index)}
@@ -54,7 +67,7 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
         </ul>
         <footer>
           <form className="messageForm" onSubmit={this.sendMessageRequest}>
-            <input onChange={this.handleMessageChange} placeholder="Type your message" />
+            <input value={this.state.currentMessage} onChange={this.handleMessageChange} placeholder="Type your message" />
             <div onClick={this.sendMessageRequest}>Send</div>
           </form>
         </footer>
