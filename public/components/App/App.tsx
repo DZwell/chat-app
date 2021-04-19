@@ -1,52 +1,61 @@
-import React, { Component } from "react";
+import * as React from "react";
 import 'regenerator-runtime/runtime'
 import { LogInScreen } from "../LoginScreen";
 import urls from "./urls";
+import './App.css';
 import { ChatRoomsList } from "../ChatRoomList";
-import { ChatDetails } from "../ChatDetails";
+import { ChatWindowContainer } from "../ChatWindowContainer";
+import { CurrentUser, ChatRoom } from './interfaces';
 
-const { chatDetailsUrl, chatRoomsUrl, messagesUrl } = urls;
+const { chatDetailsUrl, chatRoomsUrl } = urls;
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: {},
-      chatRooms: [],
-      selectedChatRoom: {},
-    };
-  }
+interface AppProps {
+  storage: any;
+}
+
+interface AppState {
+  currentUser: CurrentUser;
+  chatRooms: ChatRoom[],
+  selectedChatRoom: ChatRoom,
+}
+
+export class App extends React.Component<AppProps, AppState> {
+  state: AppState = {
+    currentUser: null,
+    chatRooms: [],
+    selectedChatRoom: null,
+  };
 
   componentDidMount() {
     const { storage } = this.props;
-    this.setState(state => ({
+    this.setState(() => ({
       currentUser: JSON.parse(storage.getItem("currentUser")),
     }));
 
-    this.fetchChatRooms();
+    this.fetchRoomsAndDetails();
   }
 
-  fetchChatRooms = async () => {
+  fetchRoomsAndDetails = async () => {
     try {
       const roomList = await fetch(chatRoomsUrl).then(response => response.json());
       const selectedChatRoom = JSON.parse(this.props.storage.getItem('selectedChatRoom')) || roomList[0];
       const roomDetails = await fetch(chatDetailsUrl(selectedChatRoom.id)).then(response => response.json());
-      this.setState(state => ({ chatRooms: roomList, selectedChatRoom: roomDetails }));
+      this.setState(() => ({ chatRooms: roomList, selectedChatRoom: roomDetails }));
     } catch {
       console.log('Something went wrong');
     }
   }
 
-  handleLogIn = (userName) => {
+  handleLogIn = (userName: string) => {
     const userObject = { userName: userName, timeStamp: new Date().getTime() };
     this.props.storage.setItem("currentUser", JSON.stringify(userObject));
-    this.setState(state => ({ currentUser: userObject }));
+    this.setState(() => ({ currentUser: userObject }));
   };
 
   handleSelectedRoomChange = async (roomId) => {
     const roomDetails = await fetch(chatDetailsUrl(roomId)).then(response => response.json());
     this.props.storage.setItem("selectedChatRoom", JSON.stringify(roomDetails));
-    this.setState(state => ({ selectedChatRoom: roomDetails }));
+    this.setState(() => ({ selectedChatRoom: roomDetails }));
   };
 
   render() {
@@ -57,7 +66,7 @@ export class App extends Component {
     }
     return (
       <div className="app">
-        {Object.keys(selectedChatRoom).length && <ChatDetails chatRoom={selectedChatRoom} currentUser={currentUser} />}
+        {selectedChatRoom && <ChatWindowContainer chatRoom={selectedChatRoom} currentUser={currentUser} />}
         <ChatRoomsList
           handleSelectedRoomChange={this.handleSelectedRoomChange}
           selectedChatRoom={selectedChatRoom}

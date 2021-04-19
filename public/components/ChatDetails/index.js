@@ -1,1 +1,1 @@
-export * from "./ChatDetails";
+export { ChatDetails } from './ChatDetails';

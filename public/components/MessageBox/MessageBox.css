@@ -1,0 +1,40 @@
+.chatList{
+	list-style-type: none;
+	overflow-y: scroll;
+	height: 535px;
+	border-top: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+	background-color: #eff1f2;
+}
+.chatList li{
+	display: flex;
+	flex-direction: column;
+	padding:10px 30px;
+}
+.chatList h2 {
+	color: #6d6d6d;
+	font-size:13px;
+	font-weight:normal;
+	margin-top: 0px;
+	text-align: start;
+}
+.chatList .message{
+	padding:20px;
+	line-height:25px;
+	border-radius: 25px;
+	width: 40%;
+}
+.chatList .outgoing {
+	align-items: flex-end;
+	text-align:right;
+}
+.chatList .incoming .message{
+	background-color:white;
+	color: black;
+	text-align: start;
+}
+.chatList .outgoing .message{
+	background-color:red;
+	color: white;
+	text-align: end;
+}

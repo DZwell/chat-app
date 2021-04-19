@@ -1,0 +1,14 @@
+.messageForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.messageForm input {
+  width: 50%;
+}
+
+.messageForm div {
+  margin-left: 15px;
+}

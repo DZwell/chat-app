@@ -2,4 +2,4 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./components";
 
-ReactDOM.render(<App storage={localStorage}/>, document.getElementById("root"));
+ReactDOM.render(<App storage={sessionStorage}/>, document.getElementById("root"));

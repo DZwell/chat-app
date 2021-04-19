@@ -1,0 +1,11 @@
+.chatDetailsContainer {
+  float: right;
+  height: 125px;
+  width: 85%;
+  box-shadow:0px 1px 1px gray;
+  text-align: center;
+}
+
+.currentUser {
+  color: red;
+}
