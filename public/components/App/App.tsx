@@ -16,6 +16,8 @@ interface AppProps {
 interface AppState {
   currentUser: CurrentUser;
   chatRooms: ChatRoom[],
+  hasError: boolean;
+  isLoading: boolean;
   selectedChatRoom: ChatRoom,
 }
 
@@ -23,6 +25,8 @@ export class App extends React.Component<AppProps, AppState> {
   state: AppState = {
     currentUser: null,
     chatRooms: [],
+    hasError: false,
+    isLoading: false,
     selectedChatRoom: null,
   };
 
@@ -36,13 +40,15 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   fetchRoomsAndDetails = async () => {
+    this.setState(() => ({ isLoading: true }));
     try {
       const roomList = await fetch(chatRoomsUrl).then(response => response.json());
       const selectedChatRoom = JSON.parse(this.props.storage.getItem('selectedChatRoom')) || roomList[0];
       const roomDetails = await fetch(chatDetailsUrl(selectedChatRoom.id)).then(response => response.json());
-      this.setState(() => ({ chatRooms: roomList, selectedChatRoom: roomDetails }));
+      this.setState(() => ({ chatRooms: roomList, isLoading: false, selectedChatRoom: roomDetails }));
     } catch {
-      console.log('Something went wrong');
+      console.log("One day I'll implement actual error/loading state handling. Today is not that day.");
+      this.setState(() => ({ hasError: true, isLoading: false }));
     }
   }
 
@@ -53,9 +59,15 @@ export class App extends React.Component<AppProps, AppState> {
   };
 
   handleSelectedRoomChange = async (roomId) => {
-    const roomDetails = await fetch(chatDetailsUrl(roomId)).then(response => response.json());
-    this.props.storage.setItem('selectedChatRoom', JSON.stringify(roomDetails));
-    this.setState(() => ({ selectedChatRoom: roomDetails }));
+    this.setState(() => ({ isLoading: true }));
+    try {
+      const roomDetails = await fetch(chatDetailsUrl(roomId)).then(response => response.json());
+      this.props.storage.setItem('selectedChatRoom', JSON.stringify(roomDetails));
+      this.setState(() => ({ isLoading: false, selectedChatRoom: roomDetails }));
+    } catch {
+      console.log("One day I'll implement better error handling. Today is not that day.");
+      this.setState(() => ({ hasError: true, isLoading: false }));
+    }
   };
 
   render() {
