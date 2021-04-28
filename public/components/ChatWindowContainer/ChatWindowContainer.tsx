@@ -18,7 +18,7 @@ interface ChatWindowContainerState {
 
 export class ChatWindowContainer extends React.Component<ChatWindowContainerProps, ChatWindowContainerState> {
   intervalId: NodeJS.Timeout = null;
-  usersInRoom = [this.props.currentUser.userName, ...this.props.chatRoom.users];
+  usersInRoom = Array.from(new Set([this.props.currentUser.userName, ...this.props.chatRoom.users]));
   state: ChatWindowContainerState = {
     chatMessages: [],
   }
