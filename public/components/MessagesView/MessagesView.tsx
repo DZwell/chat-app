@@ -33,6 +33,13 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
     }
   }
 
+  findMessageIndex = (messageId: string) => {
+    const messageIndex = this.props.chatMessages.findIndex((message) => {
+      return message.id === messageId
+    })
+    return messageIndex
+  }
+
   sendMessageRequest = async (event) => {
     event.preventDefault();
     const { selectedChatRoomId, currentUser } = this.props;
@@ -44,6 +51,15 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
       body: JSON.stringify({ name: currentUser.userName, message: this.state.currentMessage })
     }).then(res => res.json());
     this.setState(() => ({ currentMessage: ''}));
+  }
+
+  handleMessageReaction = async (messageId: string) => {
+    await fetch(urls.reactionUrl(this.props.selectedChatRoomId, messageId), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(res => res.json());
   }
 
   handleMessageChange = (event: React.FormEvent) => {
@@ -61,6 +77,7 @@ export class MessagesView extends React.Component<MessagesViewProps, MessagesVie
           {chatMessages.map((message, index) =>
             <MessageBox
               key={this.messageKey(message.name, index)}
+              handleMessageReaction={this.handleMessageReaction}
               isOutgoingMessage={message.name === currentUser.userName}
               message={message}
             />)}

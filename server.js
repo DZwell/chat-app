@@ -25,7 +25,7 @@ router.use(function(req, res, next) {
 
 // Simple in memory database
 const database = [
-  { name: 'Tea Chats', id: 0, users: ['Ryan','Nick', 'Danielle'], messages: [{name: 'Ryan', message: 'ayyyyy', id: 'gg35545'},{name: 'Nick', message: 'lmao', id: 'yy35578', reaction: null}, {name: 'Danielle', message: 'leggooooo', id: 'hh9843'}]},
+  { name: 'Tea Chats', id: 0, users: ['Ryan','Nick', 'Danielle'], messages: [{name: 'Ryan', message: 'ayyyyy', id: 'gg35545'},{name: 'Nick', message: 'lmao', id: 'yy35578', reactions: null}, {name: 'Danielle', message: 'leggooooo', id: 'hh9843'}]},
   { name: 'Coffee Chats', id: 1, users: ['Jessye'], messages: [{name: 'Jessye', message: 'ayy', id: 'ff35278'}]}
 ]
 
@@ -112,6 +112,14 @@ router.route('/rooms/:roomId/messages')
       res.json(messageObj)
     }
   })
+
+  router.post('/rooms/:roomId/messages/:messageId', (req, res) => {
+    const room = findRoom(req.params.roomId);
+    const messageIndex = findMessageIndex(room, req.params.messageId);
+    const messageToReactTo = room.messages[messageIndex];
+    messageToReactTo.reaction = !messageToReactTo.reaction ? 1 : ++messageToReactTo.reaction;
+    res.json(messageToReactTo);
+  });
 
 app.use('/api', router)
 app.listen(port)
