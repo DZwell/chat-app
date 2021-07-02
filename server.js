@@ -1,15 +1,20 @@
-var express    = require('express')
-var app        = express()
-var bodyParser = require('body-parser')
-var shortid = require('shortid')
+const express    = require('express')
+const app        = express()
+const bodyParser = require('body-parser')
+const shortid = require('shortid')
+const path = require('path');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'dist')));
 
-var port = process.env.PORT || 8080
+const port = process.env.PORT || 8080
 
-var router = express.Router()
+const router = express.Router()
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
 
 // Unsafely enable cors
 router.use(function(req, res, next) {
