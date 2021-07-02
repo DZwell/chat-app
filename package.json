@@ -1,7 +1,7 @@
 {
   "name": "frontend-project",
   "version": "1.0.0",
-  "description": "The Frontend take home project for DoorDash",
+  "description": "Chatterfly",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

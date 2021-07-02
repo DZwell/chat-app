@@ -9,7 +9,10 @@ interface LoginScreenState {
   loginFormValue: string;
 }
 
-export class LogInScreen extends React.Component<LoginScreenProps, LoginScreenState> {
+export class LogInScreen extends React.Component<
+  LoginScreenProps,
+  LoginScreenState
+> {
   state: LoginScreenState = {
     loginFormValue: "",
   };
@@ -25,14 +28,17 @@ export class LogInScreen extends React.Component<LoginScreenProps, LoginScreenSt
 
   render() {
     return (
-      <form onSubmit={() => this.props.handleLogIn(this.state.loginFormValue)} className="formContainer">
+      <form
+        onSubmit={() => this.props.handleLogIn(this.state.loginFormValue)}
+        className="formContainer"
+      >
         <input
           className="userField"
           placeholder="Type your username..."
           onChange={this.handleUserEntry}
         />
         <div className="loginButton" onClick={this.handleLogIn}>
-          Join the DoorDash Chat!
+          Join Chatterfly!
         </div>
       </form>
     );
