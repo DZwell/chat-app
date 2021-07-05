@@ -6,12 +6,13 @@ const path = require('path');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, 'dist')));
 
 const port = process.env.PORT || 8080
 
-const router = express.Router()
+const router = express.Router();
 
+
+app.use(express.static('dist'));
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
@@ -23,11 +24,11 @@ router.use(function(req, res, next) {
   next()
 })
 
-// logging middleware
-router.use(function(req, res, next) {
-    console.log('\nReceived:',{url: req.originalUrl, body: req.body, query: req.query})
-    next()
-})
+// // logging middleware
+// router.use(function(req, res, next) {
+//     console.log('\nReceived:',{url: req.originalUrl, body: req.body, query: req.query})
+//     next()
+// })
 
 // Simple in memory database
 const database = [
@@ -45,13 +46,6 @@ const findRoom = (roomId) => {
     return {error: `a room with id ${roomId} does not exist`}
   }
   return room
-}
-
-const findRoomIndex = (roomId) => {
-  const roomIndex = database.findIndex((room) => {
-    return room.id === parseInt(roomId)
-  })
-  return roomIndex
 }
 
 const findMessageIndex = (room, messageId) => {

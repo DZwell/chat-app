@@ -1,3 +1,7 @@
 .chatWindowContainer {
   display: grid;
 }
+
+.app {
+  overflow: scroll;
+}

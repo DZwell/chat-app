@@ -18,3 +18,26 @@
   font-weight: 600;
   margin-left: 15px;
 }
+
+.chatList {
+  display: list-item;
+  background-color: #eff1f2;
+  border-bottom: 2px solid #fff;
+  border-top: 2px solid #fff;
+  height: 535px;
+  list-style-type: none;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.chatList li {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 30px;
+}
+.chatList h2 {
+  color: #6d6d6d;
+  font-size: 15px;
+  font-weight: normal;
+  margin-top: 0px;
+  text-align: start;
+}
