@@ -12,14 +12,18 @@ interface ChatDetailsProps {
 export const ChatDetails = (props: ChatDetailsProps) => {
   const { chatRoom, currentUser, usersInRoom } = props;
   return (
-    <div className="usersContainer">
+    <div className='usersContainer'>
       <h1>{chatRoom.name}</h1>
       <section>
-        {usersInRoom.map((user, index) =>
-          <span key={userKey(user, index)} className={userClass(user, currentUser)}>
+        {usersInRoom.map((user, index) => (
+          <span
+            key={userKey(user, index)}
+            className={userClass(user, currentUser)}
+          >
             {userText(user, usersInRoom, index)}
-          </span>)}
+          </span>
+        ))}
       </section>
     </div>
-  )
-}
+  );
+};

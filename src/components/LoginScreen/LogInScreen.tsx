@@ -1,5 +1,5 @@
-import * as React from "react";
-import "./LoginScreen.css";
+import * as React from 'react';
+import './LoginScreen.css';
 
 interface LoginScreenProps {
   handleLogIn: (userName: string) => void;
@@ -9,12 +9,9 @@ interface LoginScreenState {
   loginFormValue: string;
 }
 
-export class LogInScreen extends React.Component<
-  LoginScreenProps,
-  LoginScreenState
-> {
+export class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
   state: LoginScreenState = {
-    loginFormValue: "",
+    loginFormValue: '',
   };
 
   handleLogIn = () => {
@@ -30,14 +27,14 @@ export class LogInScreen extends React.Component<
     return (
       <form
         onSubmit={() => this.props.handleLogIn(this.state.loginFormValue)}
-        className="formContainer"
+        className='formContainer'
       >
         <input
-          className="userField"
-          placeholder="Type your username..."
+          className='userField'
+          placeholder='Type your username...'
           onChange={this.handleUserEntry}
         />
-        <div className="loginButton" onClick={this.handleLogIn}>
+        <div className='loginButton' onClick={this.handleLogIn}>
           Join Chatterfly!
         </div>
       </form>

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=dev parcel ./public/index.html",
-    "heroku-postbuild": "node_modules/parcel-bundler/bin/cli.js build public/index.html",
+    "start": "parcel ./src/index.html",
+    "heroku-postbuild": "node_modules/parcel-bundler/bin/cli.js build src/index.html",
     "api-server": "node server.js"
   },
   "engines": {

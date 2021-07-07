@@ -1,5 +1,52 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "window.zoomLevel": 1,
+  "files.autoSave": "onFocusChange",
+  "editor.tabSize": 2,
+  "editor.fontSize": 16,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabCompletion": "on",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
   },
+  "editor.codeActionsOnSave": {
+      "source.fixAll.tslint": true
+  },
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.parameterHints.enabled": false,
+  "editor.suggest.filterGraceful": false,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "gitlens.keymap": "none",
+  "projectManager.openInNewWindowWhenClickingInStatusBar": true,
+  "extensions.ignoreRecommendations": false,
+  "cSpell.userWords": [
+      "ASPNETCORE",
+      "Interop",
+      "Mgalfa",
+      "Reinvestments",
+      "Zwelling",
+      "autobind",
+      "milliman"
+  ],
+  "sync.gist": "9e9d4d3221cf672ef01c7ea404be437f",
+  "sync.quietSync": true,
+  "sync.forceUpload": true,
+  "typescript.format.semicolons": "insert",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "window.newWindowDimensions": "fullscreen",
+  "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true
 }

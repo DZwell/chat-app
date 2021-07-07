@@ -1,11 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 import { MessagesView } from '../MessagesView/MessagesView';
-import urls from "../App/urls";
-import "./ChatWindowContainer.css";
+import './ChatWindowContainer.css';
 import { ChatDetails } from '../ChatDetails/ChatDetails';
 import { CurrentUser, ChatRoom, ChatMessage } from '../App/interfaces';
-
-const { messagesUrl } = urls;
+import { messagesUrl } from '../App/urls';
 
 interface ChatWindowContainerProps {
   currentUser: CurrentUser;
@@ -16,12 +14,17 @@ interface ChatWindowContainerState {
   chatMessages: ChatMessage[];
 }
 
-export class ChatWindowContainer extends React.Component<ChatWindowContainerProps, ChatWindowContainerState> {
+export class ChatWindowContainer extends React.Component<
+  ChatWindowContainerProps,
+  ChatWindowContainerState
+> {
   intervalId: NodeJS.Timeout = null;
-  usersInRoom = Array.from(new Set([this.props.currentUser.userName, ...this.props.chatRoom.users]));
+  usersInRoom = Array.from(
+    new Set([this.props.currentUser.userName, ...this.props.chatRoom.users])
+  );
   state: ChatWindowContainerState = {
     chatMessages: [],
-  }
+  };
 
   componentDidMount() {
     this.pollForNewMessages();
@@ -33,18 +36,19 @@ export class ChatWindowContainer extends React.Component<ChatWindowContainerProp
 
   private pollForNewMessages() {
     this.intervalId = setInterval(async () => {
-      const messages: ChatMessage[] = await fetch(messagesUrl(this.props.chatRoom.id))
-        .then(response => response.json());
+      const messages: ChatMessage[] = await fetch(messagesUrl(this.props.chatRoom.id)).then(
+        (response) => response.json()
+      );
       this.setState(() => ({ chatMessages: messages }));
     }, 500);
   }
 
   render() {
-    const { chatRoom, currentUser} = this.props;
+    const { chatRoom, currentUser } = this.props;
 
     return (
-      <div className="chatDetailsContainer">
-        <ChatDetails currentUser={currentUser} chatRoom={chatRoom} usersInRoom={this.usersInRoom}/>
+      <div className='chatDetailsContainer'>
+        <ChatDetails currentUser={currentUser} chatRoom={chatRoom} usersInRoom={this.usersInRoom} />
         <MessagesView
           chatMessages={this.state.chatMessages}
           selectedChatRoomId={this.props.chatRoom.id}
@@ -53,4 +57,4 @@ export class ChatWindowContainer extends React.Component<ChatWindowContainerProp
       </div>
     );
   }
-};
+}
