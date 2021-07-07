@@ -1,20 +1,28 @@
+# Chatterfly
+## Like Shutterfly but not
+
 1. `npm i`
-2. You'll need two terminal panes open, run these commands:
+2. You'll need two terminal panes open, run these commands in each terminal pane:
   - `npm run-api-server`
   - `npm start`
 3. Open a browser and go to `localhost:1234`
 
+## Features
+As a user I can:
+  - Sign in
+  - See how long I've been signed in
+  - See a list of chat rooms
+  - See a list of users in a chat room
+  - See a list of messages
+  - Send messages
 
-Notes
-  - Question -- why are all of these 100%?  You should be able to make whatever container you need at 100%, 100%.
-  - #root?  ids probably shouldn't be styled.  Styled ids are most likely a systematic issue that will have cohesion or specificity issues later.  This can lead to a ton of tech ebt.
+You can also open the app in a new tab, sign in as a different user,
+and see messages from the instance of the app running in the first tab.
 
-    - https://github.com/DZwell/chat-app/blob/master/public/components/MessagesView/MessagesView.tsx#L46
-      - fetch functions are better established externally.  The issue here is that this component will have to change even if the controller needs to be updated.  Breaks the single responsibility principle.
+The view will automatically scroll to the bottom when new messages are sent
 
-  - https://github.com/DZwell/chat-app/blob/master/public/components/ChatWindowContainer/ChatWindowContainer.tsx#L20
-    - believe this is just a browser timeout
+There is also a very crude "like" feature where you can click on a message
+and watch the number of "likes" increment
 
-- https://github.com/DZwell/chat-app/blob/master/public/components/App/interfaces.ts
-  - shoul dbe higher level imo
+
 
