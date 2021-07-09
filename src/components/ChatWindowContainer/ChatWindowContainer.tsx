@@ -34,12 +34,21 @@ export class ChatWindowContainer extends React.Component<
     clearInterval(this.intervalId);
   }
 
+  filterDeletedMessages(messages: ChatMessage[]) {
+    const newLocal = messages.filter((m) => !m.hasOwnProperty('isDeleted'));
+    console.log(newLocal);
+    return newLocal;
+  }
+
   private pollForNewMessages() {
+    // Could error if unmounted improperly
     this.intervalId = setInterval(async () => {
-      const messages: ChatMessage[] = await fetch(messagesUrl(this.props.chatRoom.id)).then(
-        (response) => response.json()
-      );
-      this.setState(() => ({ chatMessages: messages }));
+      const messages: ChatMessage[] = await fetch(
+        messagesUrl(this.props.chatRoom.id)
+      ).then((response) => response.json());
+      this.setState(() => ({
+        chatMessages: this.filterDeletedMessages(messages),
+      }));
     }, 500);
   }
 
@@ -48,7 +57,11 @@ export class ChatWindowContainer extends React.Component<
 
     return (
       <div className='chatDetailsContainer'>
-        <ChatDetails currentUser={currentUser} chatRoom={chatRoom} usersInRoom={this.usersInRoom} />
+        <ChatDetails
+          currentUser={currentUser}
+          chatRoom={chatRoom}
+          usersInRoom={this.usersInRoom}
+        />
         <MessagesView
           chatMessages={this.state.chatMessages}
           selectedChatRoomId={this.props.chatRoom.id}

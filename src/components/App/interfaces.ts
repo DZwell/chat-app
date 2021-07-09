@@ -4,6 +4,7 @@ export interface CurrentUser {
 }
 
 export interface ChatMessage {
+  isDeleted: boolean;
   id: string;
   message: string;
   name: string;

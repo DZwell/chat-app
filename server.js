@@ -137,6 +137,14 @@ router.post('/rooms/:roomId/messages/:messageId', (req, res) => {
   res.json(messageToReactTo);
 });
 
+router.delete('/rooms/:roomId/messages/:messageId', (req, res) => {
+  const room = findRoom(req.params.roomId);
+  const messageIndex = findMessageIndex(room, req.params.messageId);
+  const messageToReactTo = room.messages[messageIndex];
+  messageToReactTo.isDeleted = true;
+  res.json(messageToReactTo);
+});
+
 app.use('/api', router);
 app.listen(port);
 console.log(`API running at localhost:${port}/api`);

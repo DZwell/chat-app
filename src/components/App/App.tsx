@@ -40,11 +40,14 @@ export class App extends React.Component<AppProps, AppState> {
   fetchRoomsAndDetails = async () => {
     this.setState(() => ({ isLoading: true }));
     try {
-      const roomList = await fetch(chatRoomsUrl).then((response) => response.json());
-      const selectedChatRoom =
-        JSON.parse(this.props.storage.getItem('selectedChatRoom')) || roomList[0];
-      const roomDetails = await fetch(chatDetailsUrl(selectedChatRoom.id)).then((response) =>
+      const roomList = await fetch(chatRoomsUrl).then((response) =>
         response.json()
+      );
+      const selectedChatRoom =
+        JSON.parse(this.props.storage.getItem('selectedChatRoom')) ||
+        roomList[0];
+      const roomDetails = await fetch(chatDetailsUrl(selectedChatRoom.id)).then(
+        (response) => response.json()
       );
       this.setState(() => ({
         chatRooms: roomList,
@@ -68,14 +71,21 @@ export class App extends React.Component<AppProps, AppState> {
   handleSelectedRoomChange = async (roomId) => {
     this.setState(() => ({ isLoading: true }));
     try {
-      const roomDetails = await fetch(chatDetailsUrl(roomId)).then((response) => response.json());
-      this.props.storage.setItem('selectedChatRoom', JSON.stringify(roomDetails));
+      const roomDetails = await fetch(chatDetailsUrl(roomId)).then((response) =>
+        response.json()
+      );
+      this.props.storage.setItem(
+        'selectedChatRoom',
+        JSON.stringify(roomDetails)
+      );
       this.setState(() => ({
         isLoading: false,
         selectedChatRoom: roomDetails,
       }));
     } catch {
-      console.log("One day I'll implement better error handling. Today is not that day.");
+      console.log(
+        "One day I'll implement better error handling. Today is not that day."
+      );
       this.setState(() => ({ hasError: true, isLoading: false }));
     }
   };
@@ -89,7 +99,10 @@ export class App extends React.Component<AppProps, AppState> {
     return (
       <div className='app'>
         {selectedChatRoom && (
-          <ChatWindowContainer chatRoom={selectedChatRoom} currentUser={currentUser} />
+          <ChatWindowContainer
+            chatRoom={selectedChatRoom}
+            currentUser={currentUser}
+          />
         )}
         <ChatRoomsList
           handleSelectedRoomChange={this.handleSelectedRoomChange}
